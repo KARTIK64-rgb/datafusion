@@ -721,7 +721,7 @@ fn max_distinct_count(
                         Some(non_null_count) => Precision::Inexact(non_null_count),
                     }
                 }
-                    Precision::Exact(count) => {
+                Precision::Exact(count) => {
                     let null_count = *stats.null_count.get_value().unwrap_or(&0);
                     let non_null_count = count.checked_sub(null_count).unwrap_or(0);
                     if stats.null_count.is_exact().unwrap_or(false) {
@@ -2940,12 +2940,13 @@ mod tests {
 
         Ok(())
     }
+
     #[test]
     fn test_max_distinct_count_no_overflow_when_null_count_exceeds_num_rows() {
         let num_rows = Precision::Exact(2);
         let stats = ColumnStatistics {
             distinct_count: Precision::Absent,
-            null_count: Precision::Exact(5), 
+            null_count: Precision::Exact(5),
             min_value: Precision::Absent,
             max_value: Precision::Absent,
             sum_value: Precision::Absent,
@@ -2954,5 +2955,4 @@ mod tests {
         let result = max_distinct_count(&num_rows, &stats);
         assert_eq!(result, Precision::Exact(0));
     }
-   
-}               
+}
