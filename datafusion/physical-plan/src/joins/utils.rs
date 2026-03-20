@@ -2943,16 +2943,16 @@ mod tests {
 
     #[test]
     fn test_max_distinct_count_no_overflow_when_null_count_exceeds_num_rows() {
-        let num_rows = Precision::Exact(2);
+        let num_rows = Exact(2);
         let stats = ColumnStatistics {
-            distinct_count: Precision::Absent,
-            null_count: Precision::Exact(5),
-            min_value: Precision::Absent,
-            max_value: Precision::Absent,
-            sum_value: Precision::Absent,
-            byte_size: Precision::Absent,
+            distinct_count: Absent,
+            null_count: Exact(5),
+            min_value: Absent,
+            max_value: Absent,
+            sum_value: Absent,
+            byte_size: Absent,
         };
         let result = max_distinct_count(&num_rows, &stats);
-        assert_eq!(result, Precision::Exact(0));
+        assert_eq!(result, Exact(0));
     }
 }
